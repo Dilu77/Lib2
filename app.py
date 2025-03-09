@@ -1,4 +1,11 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, InlineQueryHandler
+from telegram.ext import (
+    Updater, 
+    CommandHandler, 
+    MessageHandler, 
+    filters,  # Changed from Filters to filters (lowercase)
+    CallbackQueryHandler, 
+    InlineQueryHandler
+)
 from bot import GenesisBot
 import os
 
@@ -12,9 +19,10 @@ def app():
 
     dp = updater.dispatcher
 
-    dp.add_handler(CommandHandler("start", genesis.start, filters = (Filters.command | Filters.regex(r'^/start@[\w.]+$'))))
-    dp.add_handler(CommandHandler("help", genesis.help, filters = (Filters.command | Filters.regex(r'^/menu@[\w.]+$'))))
-    dp.add_handler(CommandHandler("dev", genesis.dev, filters = (Filters.command | Filters.regex(r'^/dev@[\w.]+$'))))
+    # Updated filter syntax
+    dp.add_handler(CommandHandler("start", genesis.start, filters=(filters.COMMAND | filters.Regex(r'^/start@[\w.]+$'))))
+    dp.add_handler(CommandHandler("help", genesis.help, filters=(filters.COMMAND | filters.Regex(r'^/menu@[\w.]+$'))))
+    dp.add_handler(CommandHandler("dev", genesis.dev, filters=(filters.COMMAND | filters.Regex(r'^/dev@[\w.]+$'))))
 
     dp.add_handler(InlineQueryHandler(genesis.inline_query, pass_chat_data=True))
     dp.add_handler(CallbackQueryHandler(genesis.callback_query))
